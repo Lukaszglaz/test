@@ -1,0 +1,105 @@
+  <div
+      class="modal modal-blur fade"
+      id="modal-small"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="modal-title fs-4">🚚 Select Transport Company 🚚</div>
+            <form id="transport-form">
+              <div class="mb-3">
+                <label for="transport-company" class="form-label"
+                  >Transport Company:</label
+                >
+                <select
+                  class="form-select"
+                  id="transport-company"
+                  name="transport-company"
+                  onchange="populateDrivers()"
+                >
+                  <option value="">Select a company</option>
+                  <option value="company1">Orlen</option>
+                  <option value="company2">Lotos</option>
+                </select>
+              </div>
+              <div class="mb-3" id="driver-section" style="display: none">
+                <label for="driver" class="form-label">Select Driver:</label>
+                <select
+                  class="form-select"
+                  id="driver"
+                  name="driver"
+                  disabled
+                ></select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-link link-secondary me-auto"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              data-bs-dismiss="modal"
+              onclick="submitForm()"
+              id="confirmButton"
+              disabled
+            >
+              Confirm 🌟
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+  <!-- Modal Box - Populate Transport -->
+    <script>
+      function populateDrivers() {
+        const transportCompany =
+          document.getElementById("transport-company").value;
+        const driverDropdown = document.getElementById("driver");
+        const driverSection = document.getElementById("driver-section");
+        const confirmButton = document.getElementById("confirmButton");
+
+        driverDropdown.innerHTML = "";
+
+        const driversByCompany = {
+          company1: ["Jasiek", "Adrian", "Julia"],
+          company2: ["Maciej", "Darek", "Filip"],
+        };
+
+        const drivers = driversByCompany[transportCompany] || [];
+
+        if (drivers.length > 0) {
+          driverSection.style.display = "block";
+          driverDropdown.disabled = false;
+          confirmButton.disabled = false;
+
+          for (var i = 0; i < drivers.length; i++) {
+            var option = document.createElement("option");
+            option.value = drivers[i];
+            option.text = drivers[i];
+            driverDropdown.appendChild(option);
+          }
+        } else {
+          driverSection.style.display = "none";
+          driverDropdown.disabled = true;
+          confirmButton.disabled = true;
+        }
+      }
+    </script>
